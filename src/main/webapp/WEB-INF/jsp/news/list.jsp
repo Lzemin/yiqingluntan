@@ -70,11 +70,11 @@
             ,cols: [[
                 {checkbox: true,field:'id', title: 'ID', sort: true}
                 ,{field:'title', title: '标题'}
-                ,{field:'type.name', title: '栏目',templet: function(d){
+                ,{field:'type.name', title: '栏目名称',templet: function(d){
                     return d.type.name;
                 }}
                 ,{field:'createDate',  title: '创建时间', sort: true}
-                ,{field:'createBy.username',  title: '作者',templet: function(d){
+                ,{field:'createBy.username',  title: '作 者',templet: function(d){
                     return d.createBy.username;
                 }}
                 ,{field:'read',  title: '浏览量',sort: true}

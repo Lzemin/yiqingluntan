@@ -80,5 +80,13 @@ var navs = [{
         "title": "前台栏目列表",
         "icon": "&#xe631;",
         "href": basePath+"/sys/type/list"
+    },{
+        "title": "修改密码",
+        "icon": "&#xe629",
+        "href": basePath+"/user/updatePwd"
+    },{
+        "title": "个人信息",
+        "icon": "&#xe629",
+        "href": basePath+"/user/msg"
     }]
 }];

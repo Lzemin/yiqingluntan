@@ -161,11 +161,24 @@
         SELECT SUM(`read`) data,DATE_FORMAT(create_date,"%Y-%m")month FROM h_news GROUP BY DATE_FORMAT(create_date,"%Y-%m")
     </select>
 
-    <select id="getDataById" resultType="news" parameterType="news">
+    <select id="getDataById" resultType="com.ruixin.bean.News" parameterType="news">
         SELECT
-        a.*
+        a.id,
+        a.type_id "typeId",
+        a.title,
+        a.content,
+        a.create_date "createDate",
+        a.`read`,
+        b.`name` "type.name",
+        c.username "createBy.username",
+        c.email "createBy.email",
+        c.id "createBy.id"
         FROM
         h_news a
+        LEFT JOIN h_type b ON
+        a.type_id=b.id
+        LEFT JOIN h_user c
+        ON c.id=a.create_by
         <where>
             1=1
             <if test="id !=null ">

@@ -50,7 +50,7 @@
             <h2 class="s_title">${news.title}</h2>
             <div class="views">
                 <time>发布于:<fmt:formatDate value="${news.createDate}" pattern="yyyy-MM-dd"/></time>
-                --${news.read}次检阅--作者：${news.createBy.username}
+                --${news.read}次检阅--作者：${news.createBy.username} 邮箱：${news.createBy.email}
             </div>
         </c:if>
         <c:if test="${empty news}">

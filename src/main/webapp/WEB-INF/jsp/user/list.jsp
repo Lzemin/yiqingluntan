@@ -92,11 +92,6 @@
                     });
                     $(".user_read input[name=username]").val(e.username);
                     $(".user_read input[name=email]").val(e.email);
-                    var roles="";
-                    $.each(e.roles,function(index,val){
-                        roles+=val.name+",";
-                    });
-                    $(".user_read .user_role input").val(roles.substr(0,roles.length-1));
                     if(e.userInfo){
                         $(".user_read input[name=name]").val(e.userInfo.name);
                         $(".user_read input[name=address]").val(e.userInfo.address);
@@ -105,12 +100,17 @@
                         $(".user_read textarea[name=personal]").val(e.userInfo.personal);
                         if(e.userInfo.sex){
                             $(".user_read input[name=sex]").each(function(){
-                               if(e.userInfo.sex==$(this).val()){
+                                if(e.userInfo.sex==$(this).val()){
                                     $(this).attr("checked","true");
-                               }
+                                }
                             });
                         }
                     }
+                    var roles="";
+                    $.each(e.roles,function(index,val){
+                        roles+=val.name+",";
+                    });
+                    $(".user_read .user_role input").val(roles.substr(0,roles.length-1));
                 });
             } else if(layEvent === 'del'){
                 console.log(data);

@@ -17,7 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 
 @Controller
@@ -115,7 +118,6 @@ public class UserController {
     @PostMapping("/user/read")
     @ResponseBody
     public User read(@RequestParam("id") int id){
-        User user=UserUtils.get(id);
         return UserUtils.get(id);
     }
 
@@ -177,5 +179,35 @@ public class UserController {
         //添加权限
         roleService.insertUserRole(user.getId(),role);
         return "ture";
+    }
+
+    @GetMapping("/user/updatePwd")
+    public String updatepwd(Model model){
+        User user=UserUtils.getUser();
+        model.addAttribute("user",user);
+        return Views.USER_PWD;
+    }
+
+    @GetMapping("/user/msg")
+    public String msg(Model model){
+        User user=UserUtils.getUser();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(user.getUserInfo().getBirthday());
+        user.getUserInfo().setSignature(dateString);
+        model.addAttribute("user",user);
+        return Views.USER_MSG;
+    }
+
+    @RequiresPermissions("base:user:edit")
+    @PostMapping("/user/updatepwd")
+    @ResponseBody
+    public String updatePwd(@RequestParam("password") String passwrord){
+        User user=UserUtils.getUser();
+        user.setPassword(passwrord);
+        if(StringUtils.isNotBlank(user.getPassword())){
+            user.setPassword(MD5.md5(user.getUsername(),user.getPassword()));
+            userService.save(user);
+        }
+        return "success";
     }
 }

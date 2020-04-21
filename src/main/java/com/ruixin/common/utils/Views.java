@@ -28,6 +28,8 @@ public interface Views {
     //用户
     String USER_LIST="/user/list";
     String USER_ADD="/user/add";
+    String USER_MSG="/user/msg";
+    String USER_PWD="/user/updatepwd";
 
     //新闻
     String NEWS_LIST="/news/list";
