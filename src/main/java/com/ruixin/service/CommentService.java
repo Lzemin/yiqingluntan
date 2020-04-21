@@ -3,6 +3,7 @@ package com.ruixin.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ruixin.bean.Comment;
+import com.ruixin.bean.Comments;
 import com.ruixin.common.entity.Page;
 import com.ruixin.common.service.CrudService;
 import com.ruixin.common.utils.CacheNames;
@@ -21,8 +22,6 @@ public class CommentService extends CrudService<CommentDao,Comment> {
 
     @Cacheable
     public Page<Comment> getFindId(Page<Comment> page, Comment comment, int id) {
-        comment.setPages(page);
-        PageHelper.startPage(page.getPage(),page.getLimit());
         List<Comment> list=dao.getFindId(id);
         PageInfo pageInfo = new PageInfo(list);
         page.setData(list);
@@ -30,5 +29,6 @@ public class CommentService extends CrudService<CommentDao,Comment> {
         page.setPageCount(page.getPageNum(page));
         return page;
     }
+
 
 }

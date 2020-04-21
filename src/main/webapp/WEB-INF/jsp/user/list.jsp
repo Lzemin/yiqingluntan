@@ -97,8 +97,8 @@
                         roles+=val.name+",";
                     });
                     $(".user_read .user_role input").val(roles.substr(0,roles.length-1));
-                    if(e.userInfo!=null){
-                        $(".user_read input[name=name]").val("sss");
+                    if(e.userInfo){
+                        $(".user_read input[name=name]").val(e.userInfo.name);
                         $(".user_read input[name=address]").val(e.userInfo.address);
                         $(".user_read input[name=birthday]").val(e.userInfo.birthday);
                         $(".user_read input[name=mobile]").val(e.userInfo.mobile);

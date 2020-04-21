@@ -3,8 +3,11 @@ package com.ruixin.bean;
 import com.ruixin.common.entity.DataEntity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Comment extends DataEntity<Comment> {
+
+    private int id;
 
     private Integer newsId;
 
@@ -12,7 +15,35 @@ public class Comment extends DataEntity<Comment> {
 
     private String status;
 
+    private String username;
+
     private Date create_Date;
+
+    private List<Comments> list;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<Comments> getList() {
+        return list;
+    }
+
+    public void setList(List<Comments> list) {
+        this.list = list;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Integer getNewsId() {
         return newsId;

@@ -91,9 +91,9 @@
                             </a>
                             <div class="fly-detail-user">
                                 <a href="" class="fly-link">
-                                    <cite>${comment.id}</cite>
+                                    <cite>${comment.username}</cite>
                                     <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                    <i class="layui-badge fly-badge-vip">VIP3</i>
+                                    <i class="layui-badge fly-badge-vip">VIP</i>
                                 </a>
                             </div>
 
@@ -101,14 +101,26 @@
                                 <span><fmt:formatDate value="${comment.create_Date}" pattern="yyyy-MM-dd"/></span>
                             </div>
                         </div>
-                        <div class="detail-body jieda-body photos">
+                        <div class="detail-body jieda-body photos "overflow:auto>
                             <p>${comment.content}</p>
+                            <c:if test="${!empty comment.list}">
+                            <c:forEach items="${comment.list}" var="list">
+                                <p>${list.username1}回复${comment.username}  内容：${list.contents}</p>
+                            </c:forEach>
+                            </c:if>
                         </div>
                         <div class="jieda-reply">
-                                <span type="reply">
+                            <c:choose>
+                                <c:when test="${fns:getUser().username eq null}">
+                                </c:when>
+                                <c:otherwise>
+                                   <span id="btn1" type="reply" onclick="AddTogo(${comment.id})">
                                     <i class="iconfont icon-svgmoban53"></i>
                                     回复
                                 </span>
+                                </c:otherwise>
+                            </c:choose>
+
                         </div>
                         <hr>
                     </li>
@@ -185,4 +197,20 @@
             location.reload();
         })
     })
+    function AddTogo(id) {
+        var name = prompt("请输入您的评论", ""); //将输入的内容赋给变量 name
+        if (name)//如果返回的有内容
+        {
+            $.post("${ctx}/comments/add",{"container":name,"commentid":id}, function(){
+                alert("添加评论成功！！")
+                $("input").val("");
+                location.reload();
+            })
+
+        }
+    }
+
+
+
+
 </script>

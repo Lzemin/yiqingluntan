@@ -7,9 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface CommentDao extends CrudDao<Comment> {
+public interface CommentsDao extends CrudDao<Comments> {
 
-    List<Comment> getFindId(@Param("id") int id);
 
 
 }

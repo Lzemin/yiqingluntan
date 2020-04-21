@@ -15,20 +15,43 @@
     </where>
   </select>
 
+  <resultMap  id="ResultMapByList" type="com.ruixin.bean.Comment">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="news_id" jdbcType="INTEGER"
+            property="newsId"/>
+    <result column="content" jdbcType="VARCHAR"
+            property="content"/>
+    <result column="create_date" jdbcType="DATE"
+            property="create_Date"/>
+    <result column="status" jdbcType="VARCHAR"
+            property="status"/>
+    <result column="username" jdbcType="VARCHAR"
+            property="username"/>
+    <collection property="list" javaType="ArrayList"
+                ofType="com.ruixin.bean.Comments">
+      <result column="comment_id" jdbcType="INTEGER" property="commentsId"/>
+      <result column="contents" jdbcType="VARCHAR" property="contents"/>
+      <result column="username1" jdbcType="VARCHAR" property="username1"/>
+    </collection>
+  </resultMap>
+
   <!--查看评论-->
-  <select id="getFindId" resultType="comment" parameterType="comment">
+  <select id="getFindId" resultMap="ResultMapByList" parameterType="comment">
     SELECT
-    *
+    a.id, a.news_id, a.content, a.create_date, a.status,b.contents,b.comment_id,c.username,d.username as username1
     FROM
-    h_comment
+    h_comment a
+    left join h_user c on a.create_by=c.id
+    left join h_comments b on a.id=b.comment_id
+    left join h_user d on b.create_by=d.id
     <where>
       1=1
-      and status=0 and news_id=#{id}
+      and a.status=0 and a.news_id=#{id}
     </where>
   </select>
 
   <!--增加评论-->
-  <insert id="insert" parameterType="comment" >
+  <insert id="insert" parameterType="comment" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
     insert into h_comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="newsId != null" >
@@ -64,6 +87,28 @@
         #{createBy.id,jdbcType=VARCHAR},
       </if>
     </trim>
+  </insert>
+
+  <!--增加评论-->
+  <insert id="insertComments" parameterType="comments" >
+    insert into h_comments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentsId != null" >
+        comment_id,
+      </if>
+      <if test="contents != null" >
+        contents,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentsId != null" >
+        #{commentsId,jdbcType=INTEGER},
+      </if>
+      <if test="contents != null" >
+        #{contents,jdbcType=VARCHAR},
+      </if>
+    </trim>
+
   </insert>
 
 </mapper>
